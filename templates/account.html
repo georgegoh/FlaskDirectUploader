@@ -9,7 +9,7 @@
               $('#status').html('Upload progress: ' + percent + '%' + message);
           },
           onFinishS3Put: function(public_url) { 
-              $('#status').html('Upload completed. Uploaded to: '+ public_url);
+              $('#status').html('Upload completed. Uploaded to: <a href="'+ public_url + '">' + public_url + '</a>');
               $("#avatar_url").val(public_url);
               $("#preview").html('<img src="'+public_url+'" style="width:300px;" />');
           },
