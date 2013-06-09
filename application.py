@@ -32,7 +32,7 @@ def sign_s3():
     AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
     AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     S3_BUCKET = os.environ.get('S3_BUCKET')
-    
+
     # Collect information on the file from the GET parameters of the request:
     object_name = request.args.get('s3_object_name')
     mime_type = request.args.get('s3_object_type')
@@ -48,7 +48,7 @@ def sign_s3():
     signature = base64.encodestring(hmac.new(AWS_SECRET_KEY, put_request, sha).digest())
 
     # Build the URL of the file in anticipation of its imminent upload:
-    url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
+    url = 'http://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
     
     # Return the signed request and the anticipated URL back to the browser in JSON format:
     return json.dumps({
@@ -59,5 +59,6 @@ def sign_s3():
 # Main code
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
+    app.debug = True
     app.run(host='0.0.0.0', port=port)
     
